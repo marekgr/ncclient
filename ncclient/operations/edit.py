@@ -95,7 +95,14 @@ class CopyConfig(RPC):
         :seealso: :ref:`srctarget_params`"""
         node = new_ele("copy-config")
         node.append(util.datastore_or_url("target", target, self._assert))
-        node.append(util.datastore_or_url("source", source, self._assert))
+
+        # fixme might remove support for source being datastore name or url:
+        logger.info("Sending <copy-config>")
+        try:
+            node.append(validated_element(source, ("source", qualify("source"))))
+        except XMLError:
+            node.append(util.datastore_or_url("source", source, self._assert))
+
         return self._request(node)
 
 
