@@ -99,7 +99,7 @@ class CopyConfig(RPC):
         try:
             # datastore name or URL
             node.append(util.datastore_or_url("source", source, self._assert))
-        except ValueError:
+        except Exception:
             # `source` with `config` element containing the configuration subtree to copy
             node.append(validated_element(source, ("source", qualify("source"))))
 
